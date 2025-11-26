@@ -140,5 +140,10 @@ def update_prompts():
                 db.update_prompt(key, value['template'])
     return jsonify({"message": "Prompts updated"})
 
+@app.route('/api/reset', methods=['POST'])
+def reset_inbox():
+    db.reset_inbox()
+    return jsonify({"message": "Inbox reset successfully"})
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

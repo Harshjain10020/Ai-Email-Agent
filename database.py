@@ -103,3 +103,10 @@ class EmailDatabase:
     
     def add_draft(self, email_id: int, draft: Dict):
         self.update_email(email_id, {'draft_reply': draft})
+
+    def reset_inbox(self):
+        for email in self.emails:
+            email['category'] = None
+            email['action_items'] = []
+            email['draft_reply'] = None
+        self.save_emails()

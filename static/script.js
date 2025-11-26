@@ -380,4 +380,24 @@ document.addEventListener('DOMContentLoaded', () => {
             savePromptBtn.textContent = 'Save Prompts';
         }
     });
+
+    const resetBtn = document.getElementById('reset-btn');
+    if (resetBtn) {
+        resetBtn.addEventListener('click', async () => {
+            if (!confirm('Are you sure you want to reset the inbox? All categories and drafts will be lost.')) return;
+            
+            resetBtn.disabled = true;
+            try {
+                const res = await fetch('/api/reset', { method: 'POST' });
+                const data = await res.json();
+                alert(data.message);
+                fetchEmails();
+            } catch (err) {
+                console.error(err);
+                alert('Error resetting inbox');
+            } finally {
+                resetBtn.disabled = false;
+            }
+        });
+    }
 });
