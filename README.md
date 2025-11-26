@@ -10,6 +10,9 @@ An intelligent email management system powered by Groq's LLaMA 3.1 8B model that
 ### 🚀 [Live Demo](https://ai-email-agent-production.up.railway.app/)
 
 ---
+### 🚀 [Live Demo](https://ai-email-agent-production.up.railway.app/)
+
+---
 
 ## Features
 
