@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Email Assistant</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="icon-btn menu-btn"><span class="material-icons">menu</span></button>
+                <div class="logo">
+                    <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r5.png"
+                        alt="Logo">
+                </div>
+            </div>
+            <div class="header-search">
+                <div class="search-bar">
+                    <span class="material-icons">search</span>
+                    <input type="text" placeholder="Search mail">
+                    <span class="material-icons">tune</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="icon-btn"><span class="material-icons">help_outline</span></button>
+                <button class="icon-btn"><span class="material-icons">settings</span></button>
+                <button class="icon-btn" id="prompts-btn"><span class="material-icons">apps</span></button>
+                <div class="avatar">AI</div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <button class="compose-btn">
+                    <span class="material-icons">edit</span>
+                    <span>Compose</span>
+                </button>
+
+                <nav class="nav-menu">
+                    <div class="nav-item active" data-category="All">
+                        <span class="material-icons">inbox</span>
+                        <span class="nav-label">Inbox</span>
+                        <span class="nav-count" id="count-all"></span>
+                    </div>
+                    <div class="nav-item" data-category="Important">
+                        <span class="material-icons">label_important</span>
+                        <span class="nav-label">Important</span>
+                        <span class="nav-count" id="count-important"></span>
+                    </div>
+                    <div class="nav-item" data-category="To-Do">
+                        <span class="material-icons">task_alt</span>
+                        <span class="nav-label">To-Do</span>
+                        <span class="nav-count" id="count-todo"></span>
+                    </div>
+                    <div class="nav-item" data-category="Newsletter">
+                        <span class="material-icons">article</span>
+                        <span class="nav-label">Newsletters</span>
+                        <span class="nav-count" id="count-newsletter"></span>
+                    </div>
+                    <div class="nav-item" data-category="Spam">
+                        <span class="material-icons">report</span>
+                        <span class="nav-label">Spam</span>
+                        <span class="nav-count" id="count-spam"></span>
+                    </div>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <button id="process-btn" class="process-btn">
+                        <span class="material-icons">auto_awesome</span>
+                        Process All Emails
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Email List -->
+            <section class="email-list-container">
+                <div class="toolbar">
+                    <div class="checkbox-wrapper">
+                        <span class="material-icons">check_box_outline_blank</span>
+                        <span class="material-icons">arrow_drop_down</span>
+                    </div>
+                    <button class="icon-btn"><span class="material-icons">refresh</span></button>
+                    <button class="icon-btn"><span class="material-icons">more_vert</span></button>
+                </div>
+
+                <div class="email-list" id="email-list">
+                    <!-- Emails will be injected here -->
+                    <div class="loading">Loading...</div>
+                </div>
+            </section>
+
+            <!-- Email Detail (Hidden by default) -->
+            <section class="email-detail hidden" id="email-detail">
+                <div class="detail-toolbar">
+                    <button class="icon-btn" id="back-btn"><span class="material-icons">arrow_back</span></button>
+                    <button class="icon-btn"><span class="material-icons">archive</span></button>
+                    <button class="icon-btn"><span class="material-icons">report</span></button>
+                    <button class="icon-btn"><span class="material-icons">delete</span></button>
+                    <div class="spacer"></div>
+                    <button class="icon-btn"><span class="material-icons">mark_email_unread</span></button>
+                    <button class="icon-btn"><span class="material-icons">more_vert</span></button>
+                </div>
+
+                <div class="detail-content" id="detail-content">
+                    <!-- Detail content injected here -->
+                </div>
+
+                <!-- AI Assistant Panel -->
+                <div class="ai-panel">
+                    <div class="ai-tabs">
+                        <button class="ai-tab active" data-tab="reply">Reply</button>
+                        <button class="ai-tab" data-tab="summary">Summary</button>
+                        <button class="ai-tab" data-tab="chat">Chat</button>
+                    </div>
+
+                    <div class="ai-content">
+                        <div id="tab-reply" class="tab-pane active">
+                            <div class="reply-actions">
+                                <button id="generate-reply-btn" class="ai-action-btn">
+                                    <span class="material-icons">auto_awesome</span> Generate Reply
+                                </button>
+                            </div>
+                            <div id="reply-area" class="reply-area hidden">
+                                <textarea id="reply-text" placeholder="Generated reply..."></textarea>
+                                <div class="reply-footer">
+                                    <button id="save-draft-btn" class="send-btn">Save Draft</button>
+                                    <button class="discard-btn"><span class="material-icons">delete</span></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="tab-summary" class="tab-pane">
+                            <button id="summarize-btn" class="ai-action-btn">
+                                <span class="material-icons">summarize</span> Summarize Email
+                            </button>
+                            <div id="summary-result" class="summary-box hidden"></div>
+                        </div>
+
+                        <div id="tab-chat" class="tab-pane">
+                            <div class="chat-container" id="chat-container">
+                                <div class="chat-messages" id="chat-messages"></div>
+                                <div class="chat-input-area">
+                                    <input type="text" id="chat-input" placeholder="Ask about this email...">
+                                    <button id="chat-send-btn"><span class="material-icons">send</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Prompt Modal -->
+        <div id="prompt-modal" class="modal hidden">
+            <div class="modal-content" style="width: 600px;">
+                <h2>Prompt Configuration</h2>
+                <div class="input-group">
+                    <label>Categorization Prompt</label>
+                    <textarea id="prompt-categorization" rows="3"></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Action Item Extraction Prompt</label>
+                    <textarea id="prompt-action_extraction" rows="3"></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Auto-Reply Prompt</label>
+                    <textarea id="prompt-auto_reply" rows="3"></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Summarization Prompt</label>
+                    <textarea id="prompt-summarization" rows="3"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button id="close-prompt-btn" class="discard-btn">Cancel</button>
+                    <button id="save-prompt-btn" class="send-btn">Save Prompts</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
