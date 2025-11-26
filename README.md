@@ -7,6 +7,8 @@ An intelligent email management system powered by Groq's LLaMA 3.1 8B model that
 ![Groq](https://img.shields.io/badge/Groq-LLaMA_3.1_8B-purple)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
+### 🚀 [Live Demo](https://ai-email-agent-production.up.railway.app/)
+
 ---
 
 ## Features
@@ -89,9 +91,6 @@ A modern web interface built with **HTML5, CSS3, and Vanilla JavaScript**:
 
    Open your browser and navigate to `http://localhost:5000`.
 
-### ☁️ Deployment
-
-See [DEPLOYMENT.md](DEPLOYMENT.md) for instructions on how to host this project for free on Render.
 
 ---
 
