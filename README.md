@@ -8,6 +8,9 @@ An intelligent email management system powered by Groq's LLaMA 3.1 8B model that
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
+### 🚀 [Live Demo](https://ai-email-agent-production.up.railway.app/)
+
+---
 
 ## Features
 
